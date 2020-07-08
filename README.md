@@ -8,6 +8,7 @@ During this assignment, we will be focusing mainly on **RESTful APIs** that uses
 - [Model](#model)
 - [Setup Azure Database](#setup-azure-database)
 - [Model & Context Creation](#model--context-creation)
+- [Migrations](#migrations)
 <hr>
 
 ### Model
@@ -37,13 +38,15 @@ Now after this configuration, we are ready to actually start defining the data l
 ```cpp
 public class Student
     {
-        /* Denotes as ID for the data row, and by default it will be set 
-            as the primary key.
+        /* 
+        Denotes as ID for the data row, and by default it will be set as the 
+        primary key.
         */
         [Key]
 
-        /* Telling the API that the identifier above is supposed to be generated 
-            automatically when we add a student
+        /* 
+        Telling the API that the identifier above is supposed to be generated 
+        automatically when we add a student
         */
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
@@ -58,3 +61,59 @@ public class Student
 Now we must introduce **DbContext** which is the way to incorporate EntityFramework-based data access into the application. An instance of this class represents a session with the database which can be used to query and save instances of entities into our database. Previously, we had just defined a schema for our entity instances.
 
 To create our context, create a folder called *Data* within the project directory and then create a class within it called `StudentContext.cs` which will contain the following code.
+
+```cpp
+public class StudentContext: DbContext
+    {
+        /*
+        An empty constructor.
+        */
+        public StudentContext() { }
+
+        /*
+        The base(options) code calls the base class's contructor, and in our case
+        it is DbContext.
+        */
+        public StudentContext(DbContextOptions<StudentContext> options) :base(options) { }
+
+        /*
+        Here, we link our querying and creating process to do something relating
+        to the Student schema defined in the other class.
+        */
+        public DbSet<Student> Student { get; set; }
+        public static System.Collections.Specialized.NameValueCollection AppSettings { get; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            /*
+            The string 'schoolSIMSConnection' is the name of the key which contains 
+            the connection string produced by our database/server system earlier.
+            */
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("schoolSIMSConnection"));
+        }
+    }
+```
+
+### Migrations
+To connect our database/server system in Azure to our project, we need to modify our `appsettings.json` file to contain our connection string. Add the following code to this file.
+
+```json
+"AllowedHosts": "*",
+  "ConnectionStrings": {
+    "schoolSIMSConnection": "YOUR_OWN_CONNECTION_STRING"
+  }
+```
+
+We now need to generate the files required to update the database - the process of *Migration*. If we try to rename or drop a table without migration, it will delete all the existing data currently in the database. It is like a *git* for our model.
+
+Open the package console manager and type the following commands. On successful execution, it will create a folder called *Migration* in the project directory.
+
+```
+Add-Migration InitialCreate
+Update-Database
+```
