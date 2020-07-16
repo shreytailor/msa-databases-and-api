@@ -10,6 +10,7 @@ During this assignment, we will be focusing mainly on **RESTful APIs** that uses
 - [Model & Context Creation](#model--context-creation)
 - [Migrations](#migrations)
 - [API Controllers](#api-controllers)
+- [Swagger](#swagger)
 <hr>
 
 ### Model
@@ -137,7 +138,41 @@ After doing this, view the hidden folders by clicking on the icon below in order
 
 Within that folder, select *Add -> New Scaffold Item -> Select API Controller with actions, using Entity Framework.*. Here you are supposed to select the files which you created previously.
 
+> Before doing the above, make sure all your NuGet packages are updated to the latest versions - otherwise, you will have errors.
+
 ![](./images/2.PNG?)
 
-> Before doing the above, make sure all your Nuget packages are updated to the latest versions - otherwise, you will have errors.
+### Swagger
+Swagger UI is used so that it is easier to work and interact with our created API. To initialize it, install *Swashbuckle.AspNetCore* from NuGet package manager.
 
+Now adding the following code to `ConfigureServices` method in the `Startup.cs` file.
+
+```cpp
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "StudentSIMS", Version = "v1" });
+});
+```
+
+Then add the following code to the `Configure` method in the same file.
+
+```cpp
+// Setting up Swagger.
+app.UseSwagger();
+
+// Enabling middleware to serve swagger-ui (HTML, JS, CSS)
+// specifying the endpoint for our API.
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My first API V1");
+    c.RoutePrefix = string.Empty; // launch swagger from the root.
+});
+```
+
+In `Properties/launchsetting.json` file, you much now change the launchURL to be an empty string. If everything was done correctly, it should now be configured and now test the application by pressing the F5 button. You should get a nice UI to deal with our API endpoints.
+
+It is important to test if everything is working now, so change the field values for your first name, last name, and email address and then press the **Execute** button. Note that you don't have to change the ID because it is automatically generated.
+
+![](./images/3.PNG?)
+
+If we are returned with `201` and `200` HTTP response codes, everything is running fine with your API and server.
