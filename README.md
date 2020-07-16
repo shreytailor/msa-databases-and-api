@@ -9,6 +9,7 @@ During this assignment, we will be focusing mainly on **RESTful APIs** that uses
 - [Setup Azure Database](#setup-azure-database)
 - [Model & Context Creation](#model--context-creation)
 - [Migrations](#migrations)
+- [API Controllers](#api-controllers)
 <hr>
 
 ### Model
@@ -117,3 +118,19 @@ Open the package console manager and type the following commands. On successful 
 Add-Migration InitialCreate
 Update-Database
 ```
+
+### API Controllers
+The **controller** is where all our API endpoints are created. We are basically generating a boilerplate to work with, in order to get all of our basic methods to work with.
+
+Firstly, open the `Startup.cs` file and add the following code to the `ConfigureServices` method.
+
+```cpp
+var connection = Configuration.GetConnectionString("schoolSIMSConnection");
+// ... where 'schoolSIMSConnection' is the key name usued in the previously created JSON file.
+
+services.AddDbContext<StudentContext>(options => options.UseSqlServer(connection));
+```
+
+After doing this, view the hidden folders by clicking on the icon below in order to view the `Controllers` folder.
+
+![](./images/1.PNG?)
