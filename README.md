@@ -134,3 +134,10 @@ services.AddDbContext<StudentContext>(options => options.UseSqlServer(connection
 After doing this, view the hidden folders by clicking on the icon below in order to view the `Controllers` folder.
 
 ![](./images/1.PNG?)
+
+Within that folder, select *Add -> New Scaffold Item -> Select API Controller with actions, using Entity Framework.*. Here you are supposed to select the files which you created previously.
+
+![](./images/2.PNG?)
+
+> Before doing the above, make sure all your Nuget packages are updated to the latest versions - otherwise, you will have errors.
+
