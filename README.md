@@ -1,4 +1,7 @@
 # Databases & API <!-- omit in toc -->
+
+<p style="color: red">This .README file contains notes of the whole module as well. For screenshots of the assignment, go to to the Assignment Screenshots section :)</p>
+
 The concepts of Application Program Interfaces (APIs) and Databases are closely connected because it provides an *abstraction* for the developers to communicate with the backend - all using something called **end-points**. 
 
 During this assignment, we will be focusing mainly on **RESTful APIs** that uses HTTP requests to carry out simple interactions with the data such as create/read/update/delete (CRUD) operations. This repository will contain notes for some of the key points, as well as screenshots of my work. <br>
@@ -13,7 +16,8 @@ During this assignment, we will be focusing mainly on **RESTful APIs** that uses
 - [Swagger](#swagger)
 - [Updating Our Model](#updating-our-model)
 - [Deploy .NET Core Web API To Azure](#deploy-net-core-web-api-to-azure)
-- [Assignment For API + Database Module](#assignment-for-api--database-module)
+- [Assignment Screenshots](#assignment-screenshots)
+  - [Database](#database)
 <hr>
 
 ## Model
@@ -35,7 +39,7 @@ Thereafter you create a server which will contain your SQL database, and you can
 ## Model & Context Creation
 To get started with the actual programming, firstly we need to create a **ASP.NET<span> Core Web Application** project in Visual Studio, and using **API** as the template. Thereafter we delete the default *WeatherForecastController.cs* and *WeatherForecast.cs* files which come with the template.
 
-To further help us create our API, we need to install some libraries/extensions using the Nuget Package Manager.
+To further help us create our API, we need to install some libraries/extensions using the NuGet Package Manager.
 - Microsoft.EntityFrameworkCore: it's an ORM (Object-Relational Mapper) which allows us to work with a database using `.NET` objects.
 - Microsoft.EntityFrameworkCore.Tools: used for migration.
 - Microsoft.EntityFrameworkCore.SqlServer: used for database communications.
@@ -248,4 +252,7 @@ After creating the service on Azure, we have to publish our application from Vis
 Correctly carrying out the steps above will ensure that your API is now published on the internet.
 <hr>
 
-## Assignment For API + Database Module
+## Assignment Screenshots
+My School API can be accessed from this [link here](https://shreyschoolsim.azurewebsites.net/).
+
+### Database
