@@ -4,7 +4,7 @@ The concepts of Application Program Interfaces (APIs) and Databases are closely 
 During this assignment, we will be focusing mainly on **RESTful APIs** that uses HTTP requests to carry out simple interactions with the data such as create/read/update/delete (CRUD) operations. This repository will contain notes for some of the key points, as well as screenshots of my work. <br>
 <hr>
 
-### Table Of Contents <!-- omit in toc -->
+## Table Of Contents <!-- omit in toc -->
 - [Model](#model)
 - [Setup Azure Database](#setup-azure-database)
 - [Model & Context Creation](#model--context-creation)
@@ -13,9 +13,10 @@ During this assignment, we will be focusing mainly on **RESTful APIs** that uses
 - [Swagger](#swagger)
 - [Updating Our Model](#updating-our-model)
 - [Deploy .NET Core Web API To Azure](#deploy-net-core-web-api-to-azure)
+- [Assignment For API + Database Module](#assignment-for-api--database-module)
 <hr>
 
-### Model
+## Model
 Before we start to program our database, it is important to design its structure because the cost of changing it in the future would be expensive. We refer to this structure as a **model**.
 
 Our initial (and very simple) model will contain the following data fields -
@@ -23,13 +24,15 @@ Our initial (and very simple) model will contain the following data fields -
 - FirstName
 - LastName
 - EmailAddress
+<hr>
 
-### Setup Azure Database
+## Setup Azure Database
 Here are basic steps for the process of creating SQL instances in Azure. The **resource group** is a collection of resources which are used for a particular application, and you need to create one for this particular application.
 
 Thereafter you create a server which will contain your SQL database, and you can configure it according to your future-scaling needs. In real world cases, you need to restrict the access to your server from permitted IPs only - but simplicity's sake we can allow all ranging from `0.0.0.0` to `255.255.255.255`. This can be done from the server settings.
+<hr>
 
-### Model & Context Creation
+## Model & Context Creation
 To get started with the actual programming, firstly we need to create a **ASP.NET<span> Core Web Application** project in Visual Studio, and using **API** as the template. Thereafter we delete the default *WeatherForecastController.cs* and *WeatherForecast.cs* files which come with the template.
 
 To further help us create our API, we need to install some libraries/extensions using the Nuget Package Manager.
@@ -102,8 +105,9 @@ public class StudentContext: DbContext
         }
     }
 ```
+<hr>
 
-### Migrations
+## Migrations
 To connect our database/server system in Azure to our project, we need to modify our `appsettings.json` file to contain our connection string. Add the following code to this file.
 
 ```json
@@ -121,8 +125,9 @@ Open the package console manager and type the following commands. On successful 
 Add-Migration InitialCreate
 Update-Database
 ```
+<hr>
 
-### API Controllers
+## API Controllers
 The **controller** is where all our API endpoints are created. We are basically generating a boilerplate to work with, in order to get all of our basic methods to work with.
 
 Firstly, open the `Startup.cs` file and add the following code to the `ConfigureServices` method.
@@ -143,8 +148,9 @@ Within that folder, select *Add -> New Scaffold Item -> Select API Controller wi
 > Before doing the above, make sure all your NuGet packages are updated to the latest versions - otherwise, you will have errors.
 
 ![](./images/2.PNG?)
+<hr>
 
-### Swagger
+## Swagger
 Swagger UI is used so that it is easier to work and interact with our created API. To initialize it, install *Swashbuckle.AspNetCore* from NuGet package manager.
 
 Now adding the following code to `ConfigureServices` method in the `Startup.cs` file.
@@ -178,8 +184,9 @@ It is important to test if everything is working now, so change the field values
 ![](./images/3.PNG?)
 
 If we are returned with `201` and `200` HTTP response codes, everything is running fine with your API and server.
+<hr>
 
-### Updating Our Model
+## Updating Our Model
 If our model ever needs to change, we can update the existing model which we created earlier.
 
 ```cpp
@@ -208,8 +215,9 @@ Update-Database
 ```
 
 To revert changes, simply call `Update-Database` along with the name of the previous migration.
+<hr>
 
-### Deploy .NET Core Web API To Azure
+## Deploy .NET Core Web API To Azure
 We have completed building our API, and now we can move onto the publishing phase. Firstly, we must configure the CORS policy - so that we can host the Swagger application on Azure. Add the following code to the `Startup.cs` file.
 
 ```cpp
@@ -238,3 +246,6 @@ We have configured everything, and are ready for final deployment now. In Azure,
 After creating the service on Azure, we have to publish our application from Visual Studio, on it. In order to do this, right click on our project and select *Publish*. Select **New > Azure > Azure App Service (Windows)** and then select your application which you just created from the Azure Portal.
 
 Correctly carrying out the steps above will ensure that your API is now published on the internet.
+<hr>
+
+## Assignment For API + Database Module
